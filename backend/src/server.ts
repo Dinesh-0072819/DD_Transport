@@ -31,7 +31,9 @@ app.use(
         config.nodeEnv === 'development' ||
         config.clientUrls.includes(origin) ||
         origin.includes('localhost') ||
-        origin.includes('ddtransport.com')
+        origin.includes('ddtransport.com') ||
+        origin.includes('ddtransport.in') ||
+        origin.includes('vercel.app')
       ) {
         return callback(null, true);
       }
