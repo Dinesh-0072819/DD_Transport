@@ -1,0 +1,183 @@
+// Prisma Schema for DD Transport (MySQL 8)
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  name         String   @db.VarChar(100)
+  email        String   @unique @db.VarChar(150)
+  passwordHash String   @map("password_hash") @db.VarChar(255)
+  role         String   @default("ADMIN") @db.VarChar(50)
+  phone        String?  @db.VarChar(30)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("admins")
+}
+
+model Customer {
+  id          String     @id @default(uuid()) @db.VarChar(36)
+  name        String     @db.VarChar(150)
+  phone       String     @db.VarChar(30)
+  email       String?    @db.VarChar(150)
+  companyName String?    @map("company_name") @db.VarChar(200)
+  address     String?    @db.Text
+  city        String?    @db.VarChar(100)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  enquiries   Enquiry[]
+  bookings    Booking[]
+
+  @@index([phone])
+  @@map("customers")
+}
+
+model VehicleCategory {
+  id                  String    @id @default(uuid()) @db.VarChar(36)
+  name                String    @unique @db.VarChar(100)
+  slug                String    @unique @db.VarChar(100)
+  description         String?   @db.Text
+  defaultCapacityTons Decimal   @default(16.0) @map("default_capacity_tons") @db.Decimal(6, 2)
+  displayOrder        Int       @default(0) @map("display_order")
+  isActive            Boolean   @default(true) @map("is_active")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+  vehicles            Vehicle[]
+
+  @@map("vehicle_categories")
+}
+
+model Vehicle {
+  id                 String          @id @default(uuid()) @db.VarChar(36)
+  categoryId         String          @map("category_id") @db.VarChar(36)
+  category           VehicleCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  registrationNumber String          @unique @map("registration_number") @db.VarChar(50)
+  modelName          String          @map("model_name") @db.VarChar(100)
+  loadCapacityTons   Decimal         @map("load_capacity_tons") @db.Decimal(6, 2)
+  bodyType           String          @map("body_type") @db.VarChar(100)
+  dimensions         String?         @db.VarChar(100)
+  imageUrl           String          @map("image_url") @db.VarChar(500)
+  description        String?         @db.Text
+  availabilityStatus String          @default("AVAILABLE") @map("availability_status") @db.VarChar(50)
+  isPublic           Boolean         @default(true) @map("is_public")
+  createdAt          DateTime        @default(now()) @map("created_at")
+  updatedAt          DateTime        @updatedAt @map("updated_at")
+  bookings           Booking[]
+
+  @@map("vehicles")
+}
+
+model Service {
+  id               String   @id @default(uuid()) @db.VarChar(36)
+  title            String   @db.VarChar(150)
+  slug             String   @unique @db.VarChar(150)
+  shortDescription String   @map("short_description") @db.Text
+  fullDescription  String   @map("full_description") @db.Text
+  features         String   @db.Text // JSON stringified array of features
+  imageUrl         String   @map("image_url") @db.VarChar(500)
+  iconName         String   @default("Truck") @map("icon_name") @db.VarChar(50)
+  displayOrder     Int      @default(0) @map("display_order")
+  isPublic         Boolean  @default(true) @map("is_public")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Enquiry {
+  id                     String        @id @default(uuid()) @db.VarChar(36)
+  enquiryNumber          String        @unique @map("enquiry_number") @db.VarChar(50)
+  customerId             String?       @map("customer_id") @db.VarChar(36)
+  customer               Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  customerName           String        @map("customer_name") @db.VarChar(150)
+  customerPhone          String        @map("customer_phone") @db.VarChar(30)
+  customerEmail          String?       @map("customer_email") @db.VarChar(150)
+  pickupLocation         String        @map("pickup_location") @db.VarChar(255)
+  deliveryLocation       String        @map("delivery_location") @db.VarChar(255)
+  goodsType              String        @map("goods_type") @db.VarChar(150)
+  weightApprox           String        @map("weight_approx") @db.VarChar(100)
+  lorryTypePreferred     String        @map("lorry_type_preferred") @db.VarChar(100)
+  preferredDate          DateTime?     @map("preferred_date")
+  additionalRequirements String?       @map("additional_requirements") @db.Text
+  status                 String        @default("ENQUIRY_RECEIVED") @db.VarChar(50)
+  quotedAmount           Decimal?      @map("quoted_amount") @db.Decimal(10, 2)
+  adminNotes             String?       @map("admin_notes") @db.Text
+  ipAddress              String?       @map("ip_address") @db.VarChar(45)
+  createdAt              DateTime      @default(now()) @map("created_at")
+  updatedAt              DateTime      @updatedAt @map("updated_at")
+  notes                  EnquiryNote[]
+  bookings               Booking[]
+
+  @@index([customerPhone])
+  @@index([enquiryNumber])
+  @@map("enquiries")
+}
+
+model EnquiryNote {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  enquiryId  String   @map("enquiry_id") @db.VarChar(36)
+  enquiry    Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  authorName String   @map("author_name") @db.VarChar(100)
+  note       String   @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("enquiry_notes")
+}
+
+model Booking {
+  id                 String    @id @default(uuid()) @db.VarChar(36)
+  bookingNumber      String    @unique @map("booking_number") @db.VarChar(50)
+  enquiryId          String?   @map("enquiry_id") @db.VarChar(36)
+  enquiry            Enquiry?  @relation(fields: [enquiryId], references: [id], onDelete: SetNull)
+  customerId         String    @map("customer_id") @db.VarChar(36)
+  customer           Customer  @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  vehicleId          String?   @map("vehicle_id") @db.VarChar(36)
+  vehicle            Vehicle?  @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+  driverName         String?   @map("driver_name") @db.VarChar(100)
+  driverPhone        String?   @map("driver_phone") @db.VarChar(30)
+  pickupLocation     String    @map("pickup_location") @db.VarChar(255)
+  deliveryLocation   String    @map("delivery_location") @db.VarChar(255)
+  pickupDate         DateTime? @map("pickup_date")
+  deliveryDate       DateTime? @map("delivery_date")
+  goodsType          String    @map("goods_type") @db.VarChar(150)
+  totalFreightAmount Decimal   @default(0) @map("total_freight_amount") @db.Decimal(10, 2)
+  advanceAmount      Decimal   @default(0) @map("advance_amount") @db.Decimal(10, 2)
+  balanceAmount      Decimal   @default(0) @map("balance_amount") @db.Decimal(10, 2)
+  bookingStatus      String    @default("CONFIRMED") @map("booking_status") @db.VarChar(50)
+  remarks            String?   @db.Text
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  @@index([bookingNumber])
+  @@map("bookings")
+}
+
+model WebsiteSettings {
+  id                 String   @id @default("default") @db.VarChar(36)
+  companyName        String   @default("DD Transport") @map("company_name") @db.VarChar(150)
+  tagline            String   @default("Reliable Transport. On-Time Delivery.") @db.VarChar(255)
+  proprietorName     String   @default("P. Mariappan") @map("proprietor_name") @db.VarChar(150)
+  primaryPhone       String   @default("+91 97512 63370") @map("primary_phone") @db.VarChar(50)
+  secondaryPhone     String   @default("+91 63799 86208") @map("secondary_phone") @db.VarChar(50)
+  whatsappNumber     String   @default("+91 97512 63370") @map("whatsapp_number") @db.VarChar(50)
+  businessEmail      String   @default("contact@ddtransport.com") @map("business_email") @db.VarChar(150)
+  headOfficeAddress  String   @default("6/400, Bose Colony, Naranapuram Road, Sivakasi - 626 189, Tamil Nadu, India") @map("head_office_address") @db.Text
+  operatingHours     String   @default("24 Hours Lorry Fleet Operations | Office: 8:00 AM - 9:00 PM") @map("operating_hours") @db.VarChar(255)
+  googleMapsEmbedUrl String?  @map("google_maps_embed_url") @db.Text
+  aboutCompany       String?  @map("about_company") @db.Text
+  ourStory           String?  @map("our_story") @db.Text
+  missionStatement   String?  @map("mission_statement") @db.Text
+  visionStatement    String?  @map("vision_statement") @db.Text
+  heroHeading        String   @default("Reliable Lorry Transport & Logistics Solutions") @map("hero_heading") @db.VarChar(255)
+  heroSubheading     String   @default("Moving Your Goods Safely, Efficiently and On Time.") @map("hero_subheading") @db.Text
+  logoUrl            String   @default("/images/dd_logo.jpg") @map("logo_url") @db.VarChar(500)
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("website_settings")
+}
