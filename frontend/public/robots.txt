@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://www.ddtransport.com/sitemap.xml
+Sitemap: https://www.ddtransport.in/sitemap.xml
