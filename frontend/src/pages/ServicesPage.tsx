@@ -69,13 +69,30 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ services, settings }
           </p>
         </div>
 
-        {/* Featured Master Service Showcase Banner */}
-        <div className="mb-14 rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-brand-navy">
+        {/* Featured Vertical Lorry Showcase - Easy and Clear for Human Eyes */}
+        <div className="max-w-xl mx-auto mb-14 rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy">
           <img
-            src="/images/DD_Transport_Action_Lorry_Banner.jpg"
-            alt="DD Transport Freight Services & Corridor Routes - Ashok Leyland Taurus 10 Wheeler TN 28 AD 2467"
+            src="/images/dd_lorry_vertical.jpg"
+            alt="DD Transport Ashok Leyland Taurus 10 Wheeler TN 28 AD 2467 - 16 to 20 Tons Capacity Loads"
             className="w-full h-auto block"
           />
+          <div className="bg-brand-navy p-5 flex flex-col sm:flex-row items-center justify-between border-t border-brand-orange/30 gap-3">
+            <div>
+              <span className="text-white font-bold text-base sm:text-lg block">
+                Ashok Leyland Taurus 10-Wheeler (TN 28 AD 2467)
+              </span>
+              <span className="text-brand-orange font-semibold text-xs sm:text-sm block">
+                10-Wheel Lorry • 16 to 20 Tons Capacity Loads
+              </span>
+            </div>
+            <Link
+              to="/quote"
+              className="inline-flex items-center px-4 py-2.5 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold rounded-lg shadow transition shrink-0"
+            >
+              <Truck className="w-4 h-4 mr-1.5" />
+              <span>Book Lorry</span>
+            </Link>
+          </div>
         </div>
 
         {/* Services List - Clean, Image-Free Professional Cards */}

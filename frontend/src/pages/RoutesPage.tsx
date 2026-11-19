@@ -8,114 +8,123 @@ interface RoutesPageProps {
   settings: WebsiteSettings;
 }
 
+const ALL_COIMBATORE_ROUTES: TransportRoute[] = [
+  {
+    id: 'rt-1',
+    origin: 'Sivakasi',
+    destination: 'Coimbatore (Peelamedu / Singanallur / Gandhipuram)',
+    distance: '260 km',
+    duration: '6 - 7 Hours',
+    highways: 'NH 209 & NH 83 via Dindigul, Oddanchatram, Dharapuram & Palladam',
+    typicalCargo: 'Textile Machinery, Industrial Castings, Paper Rolls, Safety Matches, Engineering Goods',
+    frequency: 'Daily Departures (24/7 FTL)',
+  },
+  {
+    id: 'rt-2',
+    origin: 'Kovilpatti',
+    destination: 'Coimbatore (Industrial Estates & City Hubs)',
+    distance: '290 km',
+    duration: '6.5 - 7.5 Hours',
+    highways: 'NH 44 & NH 83 via Sattur, Virudhunagar, Dindigul & Palladam',
+    typicalCargo: 'Matches, Agro Products, Steel Fabrication, Industrial Components',
+    frequency: 'Daily Departures',
+  },
+  {
+    id: 'rt-3',
+    origin: 'Sivakasi / Kovilpatti',
+    destination: 'Tiruppur (Textile & Garment Export Hub)',
+    distance: '245 km',
+    duration: '5.5 - 6.5 Hours',
+    highways: 'via Dindigul, Dharapuram & Kangeyam',
+    typicalCargo: 'Corrugated Boxes, Printed Cartons, Garment Packaging, Yarn, Textiles',
+    frequency: 'Daily Direct Dispatch',
+  },
+  {
+    id: 'rt-4',
+    origin: 'Sivakasi / Kovilpatti',
+    destination: 'Palladam & Sulur (Textile & Weaving Hub)',
+    distance: '235 km',
+    duration: '5 - 6 Hours',
+    highways: 'via Dharapuram & Kundadam Corridor',
+    typicalCargo: 'Spinning Mill Freight, Feed Machinery, Industrial Fabrication, Paper Goods',
+    frequency: 'Daily Scheduled Trips',
+  },
+  {
+    id: 'rt-5',
+    origin: 'Sivakasi / Kovilpatti',
+    destination: 'Pollachi & Udumalaipettai',
+    distance: '230 km',
+    duration: '5.5 - 6 Hours',
+    highways: 'via Madurai, Dindigul & Palani Highway',
+    typicalCargo: 'Agro Machinery, Coir & Coconut Products, Commercial Freight, Raw Materials',
+    frequency: 'Daily Scheduled Runs',
+  },
+  {
+    id: 'rt-6',
+    origin: 'Sivakasi / Kovilpatti',
+    destination: 'Dharapuram & Kangeyam',
+    distance: '190 km',
+    duration: '4.5 - 5 Hours',
+    highways: 'NH 83 via Oddanchatram & Dharapuram Bypass',
+    typicalCargo: 'Rice Mills & Oil Expeller Goods, Matches, Agricultural & Packaging Cargo',
+    frequency: 'Daily Scheduled Runs',
+  },
+  {
+    id: 'rt-7',
+    origin: 'Sivakasi / Kovilpatti',
+    destination: 'Palani & Oddanchatram',
+    distance: '165 km',
+    duration: '3.5 - 4 Hours',
+    highways: 'via Sempatty & Oddanchatram Market Corridor',
+    typicalCargo: 'Commercial Packaged Goods, Market Produce, Fireworks & Matches',
+    frequency: 'Multiple Daily Trips',
+  },
+  {
+    id: 'rt-8',
+    origin: 'Sivakasi / Kovilpatti',
+    destination: 'Dindigul & Madurai (Transit Corridor)',
+    distance: '75 - 140 km',
+    duration: '1.5 - 3 Hours',
+    highways: 'NH 44 / NH 38 Four-Lane Expressway',
+    typicalCargo: 'Hardware Spares, Agro Commodities, Paper Reams, General Commercial Cargo',
+    frequency: 'Continuous Daily Dispatch',
+  },
+  {
+    id: 'rt-9',
+    origin: 'Coimbatore',
+    destination: 'Sivakasi & Kovilpatti (Return Route)',
+    distance: '260 - 290 km',
+    duration: '6 - 7.5 Hours',
+    highways: 'NH 83 & NH 44 via Palladam, Dharapuram, Oddanchatram & Madurai',
+    typicalCargo: 'Engineering Castings, Pumps, Motors, Wet Grinders, Cotton Bales & Machine Parts',
+    frequency: 'Daily Return Loads Available',
+  },
+];
+
 export const RoutesPage: React.FC<RoutesPageProps> = ({ settings }) => {
-  const [routes, setRoutes] = useState<TransportRoute[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [routes, setRoutes] = useState<TransportRoute[]>(ALL_COIMBATORE_ROUTES);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     apiClient
       .get('/routes')
       .then((res) => {
-        if (res.data?.success && res.data.routes) {
-          setRoutes(res.data.routes);
+        if (res.data?.success && Array.isArray(res.data.routes)) {
+          // Strictly filter out any old non-corridor cities
+          const valid = res.data.routes.filter((r: TransportRoute) =>
+            !r.destination.toLowerCase().includes('bengaluru') &&
+            !r.destination.toLowerCase().includes('hyderabad') &&
+            !r.destination.toLowerCase().includes('chennai')
+          );
+          if (valid.length >= 5) {
+            setRoutes(valid);
+          }
         }
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .catch(() => {});
   }, []);
 
-  const defaultRoutes: TransportRoute[] = [
-    {
-      id: 'rt-1',
-      origin: 'Sivakasi',
-      destination: 'Coimbatore (Peelamedu / Singanallur / Gandhipuram)',
-      distance: '260 km',
-      duration: '6 - 7 Hours',
-      highways: 'NH 209 & NH 83 via Dindigul, Oddanchatram, Dharapuram & Palladam',
-      typicalCargo: 'Textile Machinery, Industrial Castings, Paper Rolls, Safety Matches, Engineering Goods',
-      frequency: 'Daily Departures (24/7 FTL)',
-    },
-    {
-      id: 'rt-2',
-      origin: 'Kovilpatti',
-      destination: 'Coimbatore (Industrial Estates & City Hubs)',
-      distance: '290 km',
-      duration: '6.5 - 7.5 Hours',
-      highways: 'NH 44 & NH 83 via Sattur, Virudhunagar, Dindigul & Palladam',
-      typicalCargo: 'Matches, Agro Products, Steel Fabrication, Industrial Components',
-      frequency: 'Daily Departures',
-    },
-    {
-      id: 'rt-3',
-      origin: 'Sivakasi / Kovilpatti',
-      destination: 'Tiruppur (Textile & Garment Export Hub)',
-      distance: '245 km',
-      duration: '5.5 - 6.5 Hours',
-      highways: 'via Dindigul, Dharapuram & Kangeyam',
-      typicalCargo: 'Corrugated Boxes, Printed Cartons, Garment Packaging, Yarn, Textiles',
-      frequency: 'Daily Direct Dispatch',
-    },
-    {
-      id: 'rt-4',
-      origin: 'Sivakasi / Kovilpatti',
-      destination: 'Palladam & Sulur (Textile & Weaving Hub)',
-      distance: '235 km',
-      duration: '5 - 6 Hours',
-      highways: 'via Dharapuram & Kundadam Corridor',
-      typicalCargo: 'Spinning Mill Freight, Feed Machinery, Industrial Fabrication, Paper Goods',
-      frequency: 'Daily Scheduled Trips',
-    },
-    {
-      id: 'rt-5',
-      origin: 'Sivakasi / Kovilpatti',
-      destination: 'Pollachi & Udumalaipettai',
-      distance: '230 km',
-      duration: '5.5 - 6 Hours',
-      highways: 'via Madurai, Dindigul & Palani Highway',
-      typicalCargo: 'Agro Machinery, Coir & Coconut Products, Commercial Freight, Raw Materials',
-      frequency: 'Daily Scheduled Runs',
-    },
-    {
-      id: 'rt-6',
-      origin: 'Sivakasi / Kovilpatti',
-      destination: 'Dharapuram & Kangeyam',
-      distance: '190 km',
-      duration: '4.5 - 5 Hours',
-      highways: 'NH 83 via Oddanchatram & Dharapuram Bypass',
-      typicalCargo: 'Rice Mills & Oil Expeller Goods, Matches, Agricultural & Packaging Cargo',
-      frequency: 'Daily Scheduled Runs',
-    },
-    {
-      id: 'rt-7',
-      origin: 'Sivakasi / Kovilpatti',
-      destination: 'Palani & Oddanchatram',
-      distance: '165 km',
-      duration: '3.5 - 4 Hours',
-      highways: 'via Sempatty & Oddanchatram Market Corridor',
-      typicalCargo: 'Commercial Packaged Goods, Market Produce, Fireworks & Matches',
-      frequency: 'Multiple Daily Trips',
-    },
-    {
-      id: 'rt-8',
-      origin: 'Sivakasi / Kovilpatti',
-      destination: 'Dindigul & Madurai (Transit Corridor)',
-      distance: '75 - 140 km',
-      duration: '1.5 - 3 Hours',
-      highways: 'NH 44 / NH 38 Four-Lane Expressway',
-      typicalCargo: 'Hardware Spares, Agro Commodities, Paper Reams, General Commercial Cargo',
-      frequency: 'Continuous Daily Dispatch',
-    },
-    {
-      id: 'rt-9',
-      origin: 'Coimbatore',
-      destination: 'Sivakasi & Kovilpatti (Return Route)',
-      distance: '260 - 290 km',
-      duration: '6 - 7.5 Hours',
-      highways: 'NH 83 & NH 44 via Palladam, Dharapuram, Oddanchatram & Madurai',
-      typicalCargo: 'Engineering Castings, Pumps, Motors, Wet Grinders, Cotton Bales & Machine Parts',
-      frequency: 'Daily Return Loads Available',
-    },
-  ];
+  const defaultRoutes = ALL_COIMBATORE_ROUTES;
 
   const displayRoutes = routes.length > 0 ? routes : defaultRoutes;
 

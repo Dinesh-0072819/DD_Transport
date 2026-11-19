@@ -34,6 +34,9 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
     { from: 'Sivakasi / Kovilpatti', to: 'Tiruppur', distance: '245 km', time: '5.5-6.5 hrs', load: 'Textiles, Printed Cartons, Garment Packaging' },
     { from: 'Sivakasi / Kovilpatti', to: 'Palladam & Sulur', distance: '235 km', time: '5-6 hrs', load: 'Spinning Mill Freight, Weaving & Industrial' },
     { from: 'Sivakasi / Kovilpatti', to: 'Pollachi & Udumalpet', distance: '230 km', time: '5.5-6 hrs', load: 'Agro Machinery, Coir Goods, Raw Materials' },
+    { from: 'Sivakasi / Kovilpatti', to: 'Dharapuram & Kangeyam', distance: '190 km', time: '4.5-5 hrs', load: 'Rice Mills, Oil Expeller Freight, Matches' },
+    { from: 'Sivakasi / Kovilpatti', to: 'Palani & Oddanchatram', distance: '165 km', time: '3.5-4 hrs', load: 'Market Produce, Packaging Cartons, Matches' },
+    { from: 'Sivakasi / Kovilpatti', to: 'Dindigul & Madurai', distance: '75-140 km', time: '1.5-3 hrs', load: 'Hardware Spares, Agro Cargo, General Freight' },
     { from: 'Coimbatore', to: 'Sivakasi / Kovilpatti', distance: '260-290 km', time: '6-7.5 hrs', load: 'Return Loads: Motors, Castings, Pumps & Fabrications' },
   ];
 
