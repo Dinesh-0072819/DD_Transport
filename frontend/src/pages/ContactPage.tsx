@@ -113,8 +113,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings }) => {
 
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-brand-orange shrink-0" />
-                  <a href={`mailto:${settings.businessEmail}`} className="hover:text-white text-sm">
-                    {settings.businessEmail}
+                  <a href="mailto:ddtransport.loads@gmail.com" className="hover:text-white text-sm">
+                    ddtransport.loads@gmail.com
                   </a>
                 </div>
 

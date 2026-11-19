@@ -195,8 +195,8 @@ export const Footer: React.FC<FooterProps> = ({ settings }) => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-brand-orange shrink-0" />
-                <a href={`mailto:${settings.businessEmail}`} className="hover:text-white transition">
-                  {settings.businessEmail}
+                <a href="mailto:ddtransport.loads@gmail.com" className="hover:text-white transition">
+                  ddtransport.loads@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-3">

@@ -83,7 +83,10 @@ export const App: React.FC = () => {
       .get('/settings')
       .then((res) => {
         if (res.data?.success && res.data.settings) {
-          setSettings(res.data.settings);
+          setSettings({
+            ...res.data.settings,
+            businessEmail: 'ddtransport.loads@gmail.com',
+          });
         }
       })
       .catch((e) => console.log('Using default company settings'));
