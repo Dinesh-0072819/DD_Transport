@@ -564,18 +564,47 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
       {/* SECTION 7: POPULAR TRANSPORT ROUTES */}
       <section className="py-16 lg:py-24 bg-slate-100 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span className="text-brand-orange font-bold text-xs uppercase tracking-widest bg-orange-100/70 px-3 py-1 rounded-md">
-                Active Corridors
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight mt-3">
-                Sivakasi & Kovilpatti ➔ Coimbatore Routes
-              </h2>
-              <p className="text-sm text-gray-600 mt-2 max-w-xl">
-                Daily and scheduled Full Truck Load trips connecting Sivakasi and Kovilpatti with Coimbatore, Tiruppur, Pollachi, and Western Tamil Nadu corridors.
-              </p>
+          <div>
+            <span className="text-brand-orange font-bold text-xs uppercase tracking-widest bg-orange-100/70 px-3 py-1 rounded-md">
+              Active Corridors
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight mt-3">
+              Sivakasi & Kovilpatti ➔ Coimbatore Routes
+            </h2>
+            <p className="text-sm text-gray-600 mt-2 max-w-xl">
+              Daily and scheduled Full Truck Load trips connecting Sivakasi and Kovilpatti with Coimbatore, Tiruppur, Pollachi, and Western Tamil Nadu corridors.
+            </p>
+          </div>
+
+          {/* Routes Card & Lorry Images (Exact before View Route Details) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start max-w-4xl mx-auto my-8">
+            {/* 1st: Route Card */}
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy">
+              <img
+                src="/images/dd_routes_card.png"
+                alt="DD Transport Freight Services & Sivakasi Kovilpatti Coimbatore Routes"
+                className="w-full h-auto block"
+              />
             </div>
+            {/* 2nd: Lorry Image */}
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy flex flex-col justify-between">
+              <img
+                src="/images/dd_lorry_only.jpg"
+                alt="DD Transport Ashok Leyland Taurus 10 Wheeler TN 28 AD 2467 - 16 to 20 Tons Capacity Loads"
+                className="w-full h-auto block"
+              />
+              <div className="bg-brand-navy p-4 flex items-center justify-between border-t border-brand-orange/30">
+                <span className="text-white font-bold text-sm">
+                  Ashok Leyland Taurus 10-Wheeler (TN 28 AD 2467)
+                </span>
+                <span className="text-brand-orange font-semibold text-xs">
+                  16 to 20 Tons FTL
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end mb-8">
             <Link
               to="/routes"
               className="inline-flex items-center text-sm font-bold text-brand-orange hover:text-brand-orangeHover"
