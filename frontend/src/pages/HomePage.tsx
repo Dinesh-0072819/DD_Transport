@@ -246,7 +246,7 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <img
-                  src="/images/dd_lorry_only.jpg"
+                  src="/images/dd_original_truck.jpg"
                   alt="DD Transport Fleet at Sivakasi"
                   className="w-full h-[400px] object-cover"
                 />

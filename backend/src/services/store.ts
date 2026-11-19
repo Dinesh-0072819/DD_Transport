@@ -426,7 +426,7 @@ const fallbackStore = {
     primaryPhone: '+91 97512 63370',
     secondaryPhone: '+91 63799 86208',
     whatsappNumber: '+91 97512 63370',
-    businessEmail: 'contact@ddtransport.com',
+    businessEmail: 'ddtransport.loads@gmail.com',
     headOfficeAddress: '6/400, Bose Colony, Naranapuram Road, Sivakasi - 626 189, Tamil Nadu, India',
     operatingHours: '24 Hours Lorry Fleet Operations | Office: 8:00 AM - 9:00 PM',
     googleMapsEmbedUrl: 'https://maps.google.com/maps?q=Naranapuram+Road+Sivakasi+Tamil+Nadu&t=&z=15&ie=UTF8&iwloc=&output=embed',

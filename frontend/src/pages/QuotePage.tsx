@@ -156,7 +156,7 @@ export const QuotePage: React.FC<QuotePageProps> = ({ settings }) => {
     if (!submissionSuccess) return '';
     const enqNum = submissionSuccess.enquiryNumber || 'DDT-ENQUIRY';
     return encodeURIComponent(
-      `Hello Prop. P. Mariappan (DD Transport),\n\nI have submitted a transport enquiry on ddtransport.com:\n\n*Enquiry ID:* ${enqNum}\n*Name:* ${customerName}\n*Phone:* ${customerPhone}\n*Pickup:* ${pickupLocation}\n*Delivery:* ${deliveryLocation}\n*Goods:* ${goodsType}\n*Weight:* ${weightApprox}\n*Lorry:* ${lorryTypePreferred}\n\nPlease share the best freight quotation and lorry availability.`
+      `Hello Prop. P. Mariappan (DD Transport),\n\nI have submitted a transport enquiry on ddtransport.in:\n\n*Enquiry ID:* ${enqNum}\n*Name:* ${customerName}\n*Phone:* ${customerPhone}\n*Pickup:* ${pickupLocation}\n*Delivery:* ${deliveryLocation}\n*Goods:* ${goodsType}\n*Weight:* ${weightApprox}\n*Lorry:* ${lorryTypePreferred}\n\nPlease share the best freight quotation and lorry availability.`
     );
   };
 

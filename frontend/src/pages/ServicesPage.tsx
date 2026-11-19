@@ -69,29 +69,41 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ services, settings }
           </p>
         </div>
 
-        {/* Featured Lorry Showcase - Only The Lorry */}
-        <div className="max-w-2xl mx-auto mb-14 rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy">
-          <img
-            src="/images/dd_lorry_only.jpg"
-            alt="DD Transport Ashok Leyland Taurus 10 Wheeler TN 28 AD 2467 - 16 to 20 Tons Capacity Loads"
-            className="w-full h-auto block"
-          />
-          <div className="bg-brand-navy p-5 flex flex-col sm:flex-row items-center justify-between border-t border-brand-orange/30 gap-3">
-            <div>
-              <span className="text-white font-bold text-base sm:text-lg block">
-                Ashok Leyland Taurus 10-Wheeler (TN 28 AD 2467)
-              </span>
-              <span className="text-brand-orange font-semibold text-xs sm:text-sm block">
-                10-Wheel Lorry • 16 to 20 Tons Capacity Loads
-              </span>
+        {/* Featured Showcase: 1st Route Image, then 2nd Lorry Image */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto mb-14">
+          {/* 1st: Route & Services Card */}
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy">
+            <img
+              src="/images/dd_routes_card.png"
+              alt="DD Transport Freight Services & Sivakasi Kovilpatti Coimbatore Routes"
+              className="w-full h-auto block"
+            />
+          </div>
+
+          {/* 2nd: Lorry Image */}
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy flex flex-col justify-between">
+            <img
+              src="/images/dd_lorry_only.jpg"
+              alt="DD Transport Ashok Leyland Taurus 10 Wheeler TN 28 AD 2467 - 16 to 20 Tons Capacity Loads"
+              className="w-full h-auto block"
+            />
+            <div className="bg-brand-navy p-5 flex flex-col sm:flex-row items-center justify-between border-t border-brand-orange/30 gap-3">
+              <div>
+                <span className="text-white font-bold text-base sm:text-lg block">
+                  Ashok Leyland Taurus 10-Wheeler (TN 28 AD 2467)
+                </span>
+                <span className="text-brand-orange font-semibold text-xs sm:text-sm block">
+                  10-Wheel Lorry • 16 to 20 Tons Capacity Loads
+                </span>
+              </div>
+              <Link
+                to="/quote"
+                className="inline-flex items-center px-4 py-2.5 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold rounded-lg shadow transition shrink-0"
+              >
+                <Truck className="w-4 h-4 mr-1.5" />
+                <span>Book Lorry</span>
+              </Link>
             </div>
-            <Link
-              to="/quote"
-              className="inline-flex items-center px-4 py-2.5 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold rounded-lg shadow transition shrink-0"
-            >
-              <Truck className="w-4 h-4 mr-1.5" />
-              <span>Book Lorry</span>
-            </Link>
           </div>
         </div>
 

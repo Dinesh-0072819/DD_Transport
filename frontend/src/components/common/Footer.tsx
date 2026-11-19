@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ settings }) => {
             </p>
             <div className="pt-2 text-xs text-gray-400 space-y-1">
               <p><strong className="text-gray-300">Proprietor:</strong> {settings.proprietorName}</p>
-              <p><strong className="text-gray-300">Official Domain:</strong> <a href="https://www.ddtransport.com" className="hover:text-brand-orange underline">www.ddtransport.com</a></p>
+              <p><strong className="text-gray-300">Official Domain:</strong> <a href="https://www.ddtransport.in" className="hover:text-brand-orange underline">www.ddtransport.in</a></p>
             </div>
           </div>
 
@@ -209,7 +209,7 @@ export const Footer: React.FC<FooterProps> = ({ settings }) => {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500 gap-4">
-          <p>© {new Date().getFullYear()} DD Transport. All Rights Reserved. Official Website: ddtransport.com</p>
+          <p>© {new Date().getFullYear()} DD Transport. All Rights Reserved. Official Website: ddtransport.in</p>
           <div className="flex items-center space-x-6">
             <span>Sivakasi, Tamil Nadu</span>
             <span>•</span>

@@ -166,7 +166,7 @@ model WebsiteSettings {
   primaryPhone       String   @default("+91 97512 63370") @map("primary_phone") @db.VarChar(50)
   secondaryPhone     String   @default("+91 63799 86208") @map("secondary_phone") @db.VarChar(50)
   whatsappNumber     String   @default("+91 97512 63370") @map("whatsapp_number") @db.VarChar(50)
-  businessEmail      String   @default("contact@ddtransport.com") @map("business_email") @db.VarChar(150)
+  businessEmail      String   @default("ddtransport.loads@gmail.com") @map("business_email") @db.VarChar(150)
   headOfficeAddress  String   @default("6/400, Bose Colony, Naranapuram Road, Sivakasi - 626 189, Tamil Nadu, India") @map("head_office_address") @db.Text
   operatingHours     String   @default("24 Hours Lorry Fleet Operations | Office: 8:00 AM - 9:00 PM") @map("operating_hours") @db.VarChar(255)
   googleMapsEmbedUrl String?  @map("google_maps_embed_url") @db.Text
