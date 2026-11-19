@@ -29,12 +29,12 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
   const cleanPhone = settings.primaryPhone.replace(/\D/g, '');
 
   const popularRoutes = [
-    { from: 'Sivakasi', to: 'Chennai', distance: '540 km', time: '11-13 hrs', load: 'Industrial, Cartons, Fireworks, Paper' },
-    { from: 'Sivakasi', to: 'Coimbatore', distance: '260 km', time: '6-7 hrs', load: 'Machinery Parts, Yarn, Castings' },
-    { from: 'Sivakasi', to: 'Madurai', distance: '75 km', time: '2 hrs', load: 'Local Commercial & Consumer Goods' },
-    { from: 'Sivakasi', to: 'Bengaluru (KA)', distance: '490 km', time: '10-12 hrs', load: 'Packaging Cartons, Books, Retail' },
-    { from: 'Sivakasi', to: 'Hyderabad (TS)', distance: '1,050 km', time: '22-26 hrs', load: 'Interstate Bulk Consignments' },
-    { from: 'Sivakasi', to: 'Tuticorin Port', distance: '110 km', time: '3 hrs', load: 'Export Cargo, Container Linkage' },
+    { from: 'Sivakasi', to: 'Coimbatore', distance: '260 km', time: '6-7 hrs', load: 'Machinery Parts, Paper Rolls, Castings, Yarn' },
+    { from: 'Kovilpatti', to: 'Coimbatore', distance: '290 km', time: '6.5-7.5 hrs', load: 'Matches, Agro Products, Industrial Spares' },
+    { from: 'Sivakasi / Kovilpatti', to: 'Tiruppur', distance: '245 km', time: '5.5-6.5 hrs', load: 'Textiles, Printed Cartons, Garment Packaging' },
+    { from: 'Sivakasi / Kovilpatti', to: 'Palladam & Sulur', distance: '235 km', time: '5-6 hrs', load: 'Spinning Mill Freight, Weaving & Industrial' },
+    { from: 'Sivakasi / Kovilpatti', to: 'Pollachi & Udumalpet', distance: '230 km', time: '5.5-6 hrs', load: 'Agro Machinery, Coir Goods, Raw Materials' },
+    { from: 'Coimbatore', to: 'Sivakasi / Kovilpatti', distance: '260-290 km', time: '6-7.5 hrs', load: 'Return Loads: Motors, Castings, Pumps & Fabrications' },
   ];
 
   const processSteps = [
@@ -519,10 +519,10 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
                 Active Corridors
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight mt-3">
-                Popular Transport Routes
+                Sivakasi & Kovilpatti ➔ Coimbatore Routes
               </h2>
               <p className="text-sm text-gray-600 mt-2 max-w-xl">
-                Daily and scheduled Full Truck Load trips connecting Sivakasi with major economic corridors and ports.
+                Daily and scheduled Full Truck Load trips connecting Sivakasi and Kovilpatti with Coimbatore, Tiruppur, Pollachi, and Western Tamil Nadu corridors.
               </p>
             </div>
             <Link

@@ -21,13 +21,13 @@ export const RouteManagement: React.FC = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   // Form Fields
-  const [origin, setOrigin] = useState('Sivakasi');
-  const [destination, setDestination] = useState('');
-  const [distance, setDistance] = useState('540 km');
-  const [duration, setDuration] = useState('11 - 13 Hours');
-  const [highways, setHighways] = useState('NH 38 & NH 45 (GST Road)');
-  const [typicalCargo, setTypicalCargo] = useState('Printing Cartons, Matches, Industrial Goods');
-  const [frequency, setFrequency] = useState('Daily Departures');
+  const [origin, setOrigin] = useState('Sivakasi / Kovilpatti');
+  const [destination, setDestination] = useState('Coimbatore');
+  const [distance, setDistance] = useState('260 km');
+  const [duration, setDuration] = useState('6 - 7 Hours');
+  const [highways, setHighways] = useState('NH 209 & NH 83 via Dharapuram & Palladam');
+  const [typicalCargo, setTypicalCargo] = useState('Textile Machinery, Industrial Castings, Paper Rolls, Matches');
+  const [frequency, setFrequency] = useState('Daily Departures (24/7 FTL)');
   const [isPopular, setIsPopular] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
