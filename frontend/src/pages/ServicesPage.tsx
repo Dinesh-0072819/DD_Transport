@@ -69,10 +69,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ services, settings }
           </p>
         </div>
 
-        {/* Featured Vertical Lorry Showcase - Easy and Clear for Human Eyes */}
-        <div className="max-w-xl mx-auto mb-14 rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy">
+        {/* Featured Lorry Showcase - Only The Lorry */}
+        <div className="max-w-2xl mx-auto mb-14 rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-brand-navy">
           <img
-            src="/images/dd_lorry_vertical.jpg"
+            src="/images/dd_lorry_only.jpg"
             alt="DD Transport Ashok Leyland Taurus 10 Wheeler TN 28 AD 2467 - 16 to 20 Tons Capacity Loads"
             className="w-full h-auto block"
           />

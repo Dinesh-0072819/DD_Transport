@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Truck, Search, Filter, ShieldCheck, CheckCircle, ArrowRight, Info, AlertCircle } from 'lucide-react';
+import { Truck, Filter, ShieldCheck, CheckCircle, ArrowRight, Info, AlertCircle } from 'lucide-react';
 import { Vehicle, VehicleCategory } from '../types';
 
 interface FleetPageProps {
@@ -9,41 +9,12 @@ interface FleetPageProps {
 }
 
 export const FleetPage: React.FC<FleetPageProps> = ({ vehicles, categories }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
-  const [capacityFilter, setCapacityFilter] = useState<string>('ALL');
   const [selectedVehicleModal, setSelectedVehicleModal] = useState<Vehicle | null>(null);
 
-  // Filter only publicly visible vehicles
+  // Show all publicly active fleet lorries
   const filteredVehicles = useMemo(() => {
-    return vehicles.filter((v) => {
-      if (!v.isPublic) return false;
-
-      // Search match
-      if (searchTerm.trim()) {
-        const q = searchTerm.toLowerCase();
-        const matchesReg = v.registrationNumber.toLowerCase().includes(q);
-        const matchesModel = v.modelName.toLowerCase().includes(q);
-        const matchesBody = v.bodyType.toLowerCase().includes(q);
-        if (!matchesReg && !matchesModel && !matchesBody) return false;
-      }
-
-      // Category match
-      if (selectedCategory !== 'ALL' && v.categoryId !== selectedCategory) {
-        return false;
-      }
-
-      // Capacity filter
-      if (capacityFilter !== 'ALL') {
-        const cap = Number(v.loadCapacityTons);
-        if (capacityFilter === 'UNDER_10' && cap >= 10) return false;
-        if (capacityFilter === '10_TO_18' && (cap < 10 || cap > 18)) return false;
-        if (capacityFilter === 'ABOVE_18' && cap <= 18) return false;
-      }
-
-      return true;
-    });
-  }, [vehicles, searchTerm, selectedCategory, capacityFilter]);
+    return vehicles.filter((v) => v.isPublic);
+  }, [vehicles]);
 
   return (
     <div className="bg-slate-50 min-h-screen py-12">
@@ -61,88 +32,14 @@ export const FleetPage: React.FC<FleetPageProps> = ({ vehicles, categories }) =>
           </p>
         </div>
 
-        {/* Filter & Search Bar */}
-        <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-8 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-            {/* Search Input */}
-            <div className="md:col-span-5 relative">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
-              <input
-                type="text"
-                placeholder="Search by registration number (e.g. TN 28), model or body type..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange"
-              />
-            </div>
-
-            {/* Category Dropdown */}
-            <div className="md:col-span-4">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange"
-              >
-                <option value="ALL">All Vehicle Categories</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Capacity Filter */}
-            <div className="md:col-span-3">
-              <select
-                value={capacityFilter}
-                onChange={(e) => setCapacityFilter(e.target.value)}
-                className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange"
-              >
-                <option value="ALL">All Load Capacities</option>
-                <option value="UNDER_10">Up to 10 Tons</option>
-                <option value="10_TO_18">10 to 18 Tons (Taurus 10-Wheeler)</option>
-                <option value="ABOVE_18">Above 18 Tons (Heavy Multi-Axle)</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Result Count and Clear Filters */}
-          <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-slate-100">
-            <span>Showing <strong className="text-brand-navy">{filteredVehicles.length}</strong> available lorry types</span>
-            {(searchTerm || selectedCategory !== 'ALL' || capacityFilter !== 'ALL') && (
-              <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedCategory('ALL');
-                  setCapacityFilter('ALL');
-                }}
-                className="text-brand-orange hover:underline font-semibold"
-              >
-                Reset All Filters
-              </button>
-            )}
-          </div>
-        </div>
-
         {/* Vehicles Grid */}
         {filteredVehicles.length === 0 ? (
           <div className="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-md mx-auto">
             <Truck className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <h3 className="text-base font-bold text-brand-navy">No Vehicles Found</h3>
-            <p className="text-xs text-gray-500 mt-1 mb-4">
-              Try adjusting your search criteria or reset filters to see all available vehicles.
+            <h3 className="text-base font-bold text-brand-navy">No Vehicles Available</h3>
+            <p className="text-xs text-gray-500 mt-1">
+              Please contact our dispatch team for current fleet allocation.
             </p>
-            <button
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategory('ALL');
-                setCapacityFilter('ALL');
-              }}
-              className="px-4 py-2 bg-brand-navy text-white text-xs font-bold rounded-lg"
-            >
-              Reset Filters
-            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

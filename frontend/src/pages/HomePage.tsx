@@ -15,7 +15,11 @@ import {
   FileCheck2,
   Package,
   Layers,
-  Sparkles
+  Sparkles,
+  Factory,
+  PackageCheck,
+  Wheat,
+  HardHat
 } from 'lucide-react';
 import { WebsiteSettings, Vehicle, ServiceItem } from '../types';
 
@@ -27,6 +31,38 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services }) => {
   const cleanPhone = settings.primaryPhone.replace(/\D/g, '');
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Factory':
+        return <Factory className="w-5 h-5" />;
+      case 'PackageCheck':
+        return <PackageCheck className="w-5 h-5" />;
+      case 'Wheat':
+        return <Wheat className="w-5 h-5" />;
+      case 'HardHat':
+        return <HardHat className="w-5 h-5" />;
+      case 'MapPin':
+        return <MapPin className="w-5 h-5" />;
+      case 'Navigation':
+        return <Navigation className="w-5 h-5" />;
+      default:
+        return <Truck className="w-5 h-5" />;
+    }
+  };
+
+  const parseFeatures = (features: any): string[] => {
+    if (Array.isArray(features)) return features;
+    if (typeof features === 'string') {
+      try {
+        const parsed = JSON.parse(features);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {
+        return features.split(',').map((f) => f.trim());
+      }
+    }
+    return [];
+  };
 
   const popularRoutes = [
     { from: 'Sivakasi', to: 'Coimbatore', distance: '260 km', time: '6-7 hrs', load: 'Machinery Parts, Paper Rolls, Castings, Yarn' },
@@ -210,7 +246,7 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <img
-                  src="/images/dd_truck_2.jpg"
+                  src="/images/dd_lorry_only.jpg"
                   alt="DD Transport Fleet at Sivakasi"
                   className="w-full h-[400px] object-cover"
                 />
@@ -294,52 +330,64 @@ export const HomePage: React.FC<HomePageProps> = ({ settings, vehicles, services
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.slice(0, 6).map((service, index) => (
-              <div
-                key={service.id || index}
-                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 transition-all duration-300 group flex flex-col"
-              >
-                <div className="relative h-48 overflow-hidden bg-slate-100">
-                  <img
-                    src={service.imageUrl || '/images/dd_truck_1.jpg'}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-transparent to-transparent"></div>
-                  <div className="absolute top-3 left-3 bg-brand-navy/90 text-brand-orange p-2 rounded-lg shadow">
-                    <Truck className="w-5 h-5" />
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.slice(0, 6).map((service, index) => {
+              const features = parseFeatures(service.features);
 
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-lg font-bold text-brand-navy mb-2 group-hover:text-brand-orange transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 line-clamp-3 mb-4 leading-relaxed">
-                      {service.shortDescription}
+              return (
+                <div
+                  key={service.id || index}
+                  className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-brand-orange/50 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                      <div className="bg-brand-navy text-brand-orange p-2.5 rounded-xl border border-brand-orange/30 shadow-sm">
+                        {getIcon(service.iconName)}
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-brand-orange uppercase tracking-wider block">
+                          Service #{index + 1}
+                        </span>
+                        <h3 className="text-base font-bold text-brand-navy">{service.title}</h3>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-gray-600 leading-relaxed font-normal">
+                      {service.shortDescription || service.fullDescription}
                     </p>
+
+                    {features.length > 0 && (
+                      <div className="pt-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div className="space-y-1.5">
+                          {features.slice(0, 2).map((feat, fidx) => (
+                            <div key={fidx} className="flex items-start space-x-2 text-xs text-gray-700">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                              <span className="text-[11px]">{feat}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-4">
                     <Link
                       to={`/quote?service=${encodeURIComponent(service.title)}`}
-                      className="text-xs font-bold text-brand-orange hover:text-brand-orangeHover flex items-center uppercase tracking-wider"
+                      className="inline-flex items-center px-3.5 py-2 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold rounded-lg shadow-sm transition"
                     >
-                      <span>Enquire Rate</span>
-                      <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                      <Truck className="w-3.5 h-3.5 mr-1.5" />
+                      <span>Book Service</span>
                     </Link>
                     <Link
                       to="/services"
-                      className="text-xs font-medium text-gray-500 hover:text-brand-navy"
+                      className="text-xs font-semibold text-brand-navy hover:text-brand-orange transition"
                     >
-                      View Details
+                      View Details →
                     </Link>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center mt-12">
